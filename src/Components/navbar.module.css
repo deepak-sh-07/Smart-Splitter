@@ -1,0 +1,42 @@
+.header{
+    height: 120px;
+    width: 100%;
+    border-radius: 7px;
+    background-image:url("/src/assets/bg5.jpg");      
+    box-shadow: 8px -8px 15px 0px rgba(0, 0, 0, 0.3);
+}
+.logo img{
+    height: 34px;
+    width: 34px;
+}
+.top{
+    height: 35px;
+    width: 96%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+.links a{
+    color: aliceblue;
+    margin-left: 10px;
+    font-size: 10px;
+    text-decoration: none;
+}
+.name{
+    margin-top: 10px;
+}
+.appname{
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    font-size: 26px;
+    font-weight: 400;
+}
+.desc{
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    font-size: 10px;
+}

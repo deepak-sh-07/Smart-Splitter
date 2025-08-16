@@ -1,0 +1,109 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'popins,sans-sarif';
+    font-family: 'Poppins', sans-serif;
+}
+.main{
+    background-image:url("/src/assets/bg4.jpg");
+    margin-top: 5px;
+    height:345px;
+    width: 389px;
+    border-radius: 7px;
+    box-shadow: 8px -8px 15px 8px rgba(0, 0, 0, 0.3);
+ }
+.container{
+    height: 58vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 17px;
+}
+.header{
+    height: 120px;
+    width: 100%;
+    border-radius: 7px;
+    background-image:url("/src/assets/bg5.jpg");      
+    box-shadow: 8px -8px 15px 0px rgba(0, 0, 0, 0.3);
+}
+.logo img{
+    height: 34px;
+    width: 34px;
+}
+.top{
+    height: 35px;
+    width: 96%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+.links a{
+    color: aliceblue;
+    margin-left: 10px;
+    font-size: 10px;
+    text-decoration: none;
+}
+.name{
+    margin-top: 10px;
+}
+.appname{
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    font-size: 26px;
+    font-weight: 400;
+}
+.desc{
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    font-size: 10px;
+}
+.login{
+    height: 166px;
+    width: 220px;
+    background-color: #0b91ea;
+}
+.usename,.pass,.email{
+    padding: 5px;
+    font-size: 14px;
+    color: aliceblue;
+}
+.name{
+   font-size: 14px;
+   color: aliceblue;
+   padding-left: 5px; 
+}
+.usename{
+    padding-top: 20px;
+}
+.Log_btn{
+    display: flex;
+    justify-content: center;
+    
+}
+.Log_btn button,.signin button{
+    height: 30px;
+    width: 90px;
+    background-color: rgb(60, 16, 219);
+    border-radius: 5px;
+    border: none;
+    color: white;
+    margin-top: 5px;
+    box-shadow: 3px -3px 6px 3px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+.signin{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 5px;
+}
+.new{
+    font-size: 12px;
+    cursor: pointer;
+    color: aliceblue;
+}

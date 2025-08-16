@@ -1,0 +1,129 @@
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'popins,sans-sarif';
+    font-family: 'Poppins', sans-serif;
+}
+.main{
+    background-image:url("/src/assets/bg4.jpg");
+    margin-top: 5px;
+    height:345px;
+    width: 389px;
+    border-radius: 7px;
+    box-shadow: 8px -8px 15px 8px rgba(0, 0, 0, 0.3);
+ }
+.container {
+    height: 58vh;
+    width: 100%;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.container ul{
+    display: flex;
+    flex-wrap: wrap;       
+    justify-content: flex-start;
+    align-items: flex-start;  
+    align-content: flex-start;
+    gap: 10px;
+}
+.container ul li{
+    height: 70px;
+    width: 70px;
+    background-color: #0b91ea;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    color: aliceblue;
+}
+.splitBetween{
+    background-color: #a30d0d;
+    max-height: 110px;
+    overflow: auto;
+}
+.splitBetween label {
+  display: block;
+  margin-bottom: 5px; 
+}
+.buttons{
+    padding-right: 22px;
+    display: flex;
+    justify-content: space-between;
+}
+.buttons button{
+    height: 30px;
+    width: 90px;
+    background-color: rgb(60, 16, 219);
+    border-radius: 5px;
+    border: none;
+    color: white;
+    box-shadow: 3px -3px 6px 3px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+.paidBy  {
+  max-height: 100px;      
+  overflow-y: auto;   
+}
+.addExpense{
+    cursor: pointer;
+    color: aliceblue;
+    max-height: 177px;
+}
+.selected{
+    height: 70px;
+    width: 70px;
+    background-color: #0b91ea;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    text-align: center;
+    color: aliceblue;
+}
+.second_container{
+    height: 47vh;
+    width: 94%;
+    gap: 17px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    
+}
+.second_container div{
+    margin-top: 5px;
+}
+.summary{
+    height: 47vh;
+    width: 94%;
+    gap: 34px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+}
+.summary ul{
+    max-height: 172px;
+    width: 257px;
+    color: aliceblue;
+    overflow: auto;
+}
+.cross{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 15px;
+}
+.cross img{
+    height: 24px;
+    width: 24px;
+    filter: invert();
+    cursor: pointer;
+}
+.splitBetween_list{
+    max-height: 86px;
+    overflow: auto; 
+}
