@@ -2,104 +2,52 @@ import Navbar from "./Navbar";
 import { useState, useEffect } from "react";
 import styles from "./group.module.css";
 import cross from "../assets/cross.svg";
+import { fetchWithAuth } from "../utils/fetchWithAuth.js";
+
 const Groups = () => {
   const [groups, setGroups] = useState([]);
-  const [paidBy, setPaidBy] = useState("");
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const [paidBy, setPaidBy] = useState("");
   const [splitBetween, setSplitBetween] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  const [expenses, setExpenses] = useState([]);
   const [owesList, setOwesList] = useState([]);
   const [showSummary, setShowSummary] = useState(false);
   const [flag, setFlag] = useState(true);
-  const fetchWithAuth = async (url, options = {}) => {
-  let accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
 
-  // 1️⃣ Try request with current access token
-  let response = await fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-  });
-
-  // 2️⃣ If token expired, try refreshing
-  if (response.status === 403 && refreshToken) {
-    const refreshRes = await fetch("http://localhost:5000/api/refresh", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken }),
-    });
-
-    if (refreshRes.ok) {
-      const data = await refreshRes.json();
-      localStorage.setItem("accessToken", data.accessToken);
-
-      // Retry original request with new token
-      response = await fetch(url, {
-        ...options,
-        headers: {
-          ...options.headers,
-          Authorization: `Bearer ${data.accessToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-    } else {
-      alert("Session expired, please log in again.");
-      localStorage.clear();
-      window.location.href = "/";
-      return { ok: false, status: 403, data: null };
+  // Fetch groups
+  const fetchGroups = async () => {
+    try {
+      const data = await fetchWithAuth("http://localhost:5000/api/groups");
+      setGroups(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error(err);
+      setGroups([]);
     }
-  }
+  };
 
-  // 3️⃣ Always safely parse JSON (or return null if no JSON body)
-  let data = null;
-  try {
-    data = await response.json();
-  } catch (e) {
-    data = null; // fallback if no JSON
-  }
-
-  return { ok: response.ok, status: response.status, data };
-};
-
-
-    useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const response = await fetchWithAuth("http://localhost:5000/api/groups");
-        setGroups(Array.isArray(response.data) ? response.data : []);
-      } catch (err) {
-        console.error("Error fetching groups:", err);
-        setGroups([]);
-      }
-    };
+  useEffect(() => {
     fetchGroups();
   }, []);
 
-
   const handleGroupClick = (group) => {
-    setFlag(false)
+    setFlag(false);
     setSelectedGroup(group);
     setPaidBy("");
     setSplitBetween([]);
     setSelectAll(false);
     setDescription("");
     setAmount("");
-    setExpenses([]);
     setOwesList([]);
     setShowSummary(false);
   };
 
-  const handleSelectAll = (checked, participants) => {
+  const handleSelectAll = (checked) => {
     setSelectAll(checked);
-    if (checked) {
-      setSplitBetween(participants);
+    if (checked && selectedGroup) {
+      const others = (selectedGroup.participants || []).filter((p) => p !== paidBy);
+      setSplitBetween(others);
     } else {
       setSplitBetween([]);
     }
@@ -114,14 +62,12 @@ const Groups = () => {
   };
 
   const handleAddExpense = async () => {
-    if (!selectedGroup) return alert("Please select a group first.");
-    if (!description || !amount || !paidBy || splitBetween.length === 0) {
-      alert("Please fill all fields before adding expense.");
-      return;
+    if (!selectedGroup || !description || !amount || !paidBy || splitBetween.length === 0) {
+      return alert("Please fill all fields.");
     }
 
     const expenseData = {
-      groupId: selectedGroup._id.toString(),
+      groupId: selectedGroup._id?.toString(),
       description,
       amount: parseFloat(amount),
       paidBy,
@@ -129,41 +75,59 @@ const Groups = () => {
     };
 
     try {
-      const response = await fetchWithAuth("http://localhost:5000/api/expenses", {
+      const data = await fetchWithAuth("http://localhost:5000/api/expenses", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(expenseData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to add expense");
+      if (data?.id) {
+        alert("Expense added successfully!");
+        setDescription("");
+        setAmount("");
+        setPaidBy("");
+        setSplitBetween([]);
+        setSelectAll(false);
+      } else {
+        alert(data?.error || "Failed to add expense");
       }
-
-      alert("Expense added successfully!");
-      setDescription("");
-      setAmount("");
-      setPaidBy("");
-      setSplitBetween([]);
-      setSelectAll(false);
     } catch (err) {
-      console.error("Error adding expense:", err);
+      console.error(err);
+      alert("Something went wrong while adding expense.");
     }
   };
 
-    const handleViewSummary = async () => {
+  const handleViewSummary = async () => {
     try {
-     const res = await fetchWithAuth(`http://localhost:5000/api/expenses/${selectedGroup._id}`);
-     setOwesList(Array.isArray(res.data) ? res.data : []);
+      const data = await fetchWithAuth(`http://localhost:5000/api/expenses/${selectedGroup._id}`);
+      setOwesList(Array.isArray(data) ? data : []);
       setShowSummary(true);
     } catch (err) {
       console.error("Error fetching summary:", err);
     }
   };
 
-  const handlecross = ()=>{
-    setShowSummary(false);
-  }
+  const handleDeleteGroup = async () => {
+    if (!selectedGroup) return;
+    if (!window.confirm("Are you sure you want to delete this group?")) return;
 
+    try {
+      const data = await fetchWithAuth(`http://localhost:5000/api/groups/${selectedGroup._id}`, {
+        method: "DELETE",
+      });
+
+      if (data?.message || data?.deletedCount) {
+        alert("Group deleted successfully!");
+        setSelectedGroup(null);
+        setFlag(true);
+        fetchGroups();
+      } else {
+        alert(data?.error || "Failed to delete group");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong while deleting group.");
+    }
+  };
 
   return (
     <div className={styles.main}>
@@ -172,12 +136,8 @@ const Groups = () => {
         {flag && (
           <ul className={styles.groupList}>
             {groups.length > 0 ? (
-              groups.map((group, index) => (
-                <li
-                  key={group._id || index}
-                  className={styles.groupItem}
-                  onClick={() => handleGroupClick(group)}
-                >
+              groups.map((group) => (
+                <li key={group._id} className={styles.groupItem} onClick={() => handleGroupClick(group)}>
                   {group.title}
                 </li>
               ))
@@ -187,32 +147,34 @@ const Groups = () => {
           </ul>
         )}
 
+        {selectedGroup && !showSummary && (
+          <div className={styles.card}>
+            <h2 className={styles.selected}>{selectedGroup.title}</h2>
+            <button className={styles.deleteBtn} onClick={handleDeleteGroup}>Delete Group</button>
 
-        {selectedGroup && !flag && !showSummary &&(
-          <div className={styles.second_container}>
-            <div className={styles.selected}>
-              {selectedGroup.title}
-            </div>
             <div className={styles.addExpense}>
-
-              <div>
-                Description:{" "}
+              <label>
+                Description
                 <input
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  placeholder="e.g. Dinner, Tickets"
                 />
-              </div>
-              <div>
-                Amount:{" "}
+              </label>
+
+              <label>
+                Amount
                 <input
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
+                  placeholder="e.g. 500"
                 />
-              </div>
+              </label>
 
-              <div>
+              <label>
+                Paid By
                 <select
                   value={paidBy}
                   onChange={(e) => {
@@ -222,34 +184,27 @@ const Groups = () => {
                   }}
                 >
                   <option value="">Select payer</option>
-                  {(selectedGroup.participants || []).map((p, index) => (
-                    <option key={index} value={p}>
-                      {p}
-                    </option>
+                  {(selectedGroup.participants || []).map((p, i) => (
+                    <option key={i} value={p}>{p}</option>
                   ))}
                 </select>
-              </div>
+              </label>
 
               {paidBy && (
-                <div className={styles.splitBetween_list}>
-                  <p>Split Between:</p>
+                <div className={styles.splitBetween}>
+                  <p>Split Between</p>
                   <label>
                     <input
                       type="checkbox"
                       checked={selectAll}
-                      onChange={(e) =>
-                        handleSelectAll(
-                          e.target.checked,
-                          (selectedGroup.participants || []).filter((p) => p !== paidBy)
-                        )
-                      }
+                      onChange={(e) => handleSelectAll(e.target.checked)}
                     />
                     Everyone
                   </label>
                   {(selectedGroup.participants || [])
                     .filter((p) => p !== paidBy)
-                    .map((participant, index) => (
-                      <label key={index} style={{ display: "block" }}>
+                    .map((participant, i) => (
+                      <label key={i}>
                         <input
                           type="checkbox"
                           checked={splitBetween.includes(participant)}
@@ -261,43 +216,34 @@ const Groups = () => {
                 </div>
               )}
             </div>
-          </div>
 
-        )}
-        {selectedGroup && !flag && !showSummary &&(
-          <div className={styles.buttons}>
-            <button onClick={handleViewSummary}>View Summary</button>
-            <button onClick={handleAddExpense}>Add Expense</button>
-          </div>
-        )}
-        
-        {selectedGroup && showSummary && (
-          <>
-          <div className={styles.cross}>
-            <img onClick={handlecross} src={cross} alt="" />
-          </div>
-        <div className={styles.summary}>
-          
-          <div className={styles.selected}>
-              {selectedGroup.title}
+            <div className={styles.buttons}>
+              <button onClick={handleViewSummary}>View Summary</button>
+              <button onClick={handleAddExpense}>Add Expense</button>
             </div>
-          <ul>
-            {Array.isArray(owesList) && owesList.map(item => (
-              <div key={`${item.from}-${item.to}`}>
-                {item.from} owes {item.to} ₹{item.amount}
-              </div>
-            ))}
-          </ul>
-          
-        </div>
-        </>
-      )}
+          </div>
+        )}
+
+        {selectedGroup && showSummary && (
+          <div className={styles.summary}>
+            <div className={styles.cross}>
+              <img onClick={() => setShowSummary(false)} src={cross} alt="Close" />
+            </div>
+            <h2 className={styles.selected}>{selectedGroup.title}</h2>
+            <ul>
+              {owesList.length > 0 ? (
+                owesList.map((item) => (
+                  <li key={`${item.from}-${item.to}`}>
+                    <strong>{item.from}</strong> owes <strong>{item.to}</strong> ₹{item.amount}
+                  </li>
+                ))
+              ) : (
+                <p>No balances yet.</p>
+              )}
+            </ul>
+          </div>
+        )}
       </div>
-
-
-
-
-      
     </div>
   );
 };

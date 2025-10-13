@@ -1,16 +1,19 @@
 .header{
-    height: 120px;
+    height: 22vh;
     width: 100%;
     border-radius: 7px;
     background-image:url("/src/assets/bg5.jpg");      
     box-shadow: 8px -8px 15px 0px rgba(0, 0, 0, 0.3);
+    background-size: cover;    
+    background-position: center; 
+    background-repeat: no-repeat;
 }
 .logo img{
-    height: 34px;
-    width: 34px;
+    height: 70px;
+    width: 70px;
 }
 .top{
-    height: 35px;
+    height: 9vh;
     width: 96%;
     display: flex;
     justify-content: space-between;
@@ -21,7 +24,7 @@
 .links a{
     color: aliceblue;
     margin-left: 10px;
-    font-size: 10px;
+    font-size: 21px;
     text-decoration: none;
 }
 .name{
@@ -31,12 +34,12 @@
     display: flex;
     justify-content: center;
     color: aliceblue;
-    font-size: 26px;
+    font-size: 45px;
     font-weight: 400;
 }
 .desc{
     display: flex;
     justify-content: center;
     color: aliceblue;
-    font-size: 10px;
+    font-size: 20px;
 }
