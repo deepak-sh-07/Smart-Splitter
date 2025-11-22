@@ -17,15 +17,15 @@ A modern, beautiful expense splitting application that helps you manage shared e
 <div align="center">
 
 ### 🏠 Home Page
-![Home Page](./screenshots/Home.png)
+![Home Page](./Screenshots/Home.png)
 *Clean and intuitive home screen with action cards*
 
 ### 👥 Groups List
-![Groups List](./screenshots/Groups.png)
+![Groups List](./Screenshots/Groups.png)
 *View all your expense groups at a glance*
 
 ### 💰 Group Management
-![Group Management](./screenshots/Group.png)
+![Group Management](./Screenshots/Group.png)
 *Add expenses, split bills, and view summaries*
 
 </div>
