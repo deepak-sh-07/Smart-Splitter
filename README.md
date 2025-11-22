@@ -8,8 +8,33 @@ A modern, beautiful expense splitting application that helps you manage shared e
 ![Node.js](https://img.shields.io/badge/Node.js-Backend-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
+<<<<<<< HEAD
 ## ✨ Features
 
+=======
+## 📸 Screenshots
+
+<div align="center">
+
+### 🏠 Home Page
+![Home Page](./screenshots/Home.png)
+*Clean and intuitive home screen with action cards*
+
+### 👥 Groups List
+![Groups List](./screenshots/Groups.png)
+*View all your expense groups at a glance*
+
+### 💰 Group Management
+![Group Management](./screenshots/Group.png)
+*Add expenses, split bills, and view summaries*
+
+</div>
+
+---
+
+## ✨ Features
+
+>>>>>>> 65de0134741c9fd1179511e746bca486ae53a723
 - 🎯 **Create Groups** - Organize expenses by creating groups with multiple participants
 - 💸 **Split Expenses** - Add expenses and automatically split them among group members
 - 📊 **View Summaries** - See who owes whom at a glance with detailed balance summaries
@@ -78,6 +103,10 @@ smart-splitter/
 │   │   └── fetchWithAuth.js   # API utility functions
 │   ├── App.jsx
 │   └── main.jsx
+<<<<<<< HEAD
+=======
+├── screenshots/               # Screenshots for README
+>>>>>>> 65de0134741c9fd1179511e746bca486ae53a723
 ├── package.json
 └── README.md
 ```
@@ -199,7 +228,18 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 <div align="center">
+<<<<<<< HEAD
 Made with ❤️ by Your Name
 
 ⭐ Star this repo if you find it helpful!
 </div>
+=======
+
+### 🌟 Show Your Support
+
+Give a ⭐ if this project helped you!
+
+![Footer Banner](https://capsule-render.vercel.app/api?type=waving&color=0:0b91ea,100:005fba&height=120&section=footer)
+
+</div>
+>>>>>>> 65de0134741c9fd1179511e746bca486ae53a723
