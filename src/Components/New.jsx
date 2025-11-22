@@ -29,7 +29,7 @@ const New = () => {
       });
 
       if (data?._id || data?.id) {
-        navigate("/home");
+        navigate("/");
       } else {
         alert(data?.error || "Failed to create group");
       }

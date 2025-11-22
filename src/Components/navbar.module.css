@@ -1,45 +1,242 @@
-.header{
-    height: 22vh;
-    width: 100%;
-    border-radius: 7px;
-    background-image:url("/src/assets/bg5.jpg");      
-    box-shadow: 8px -8px 15px 0px rgba(0, 0, 0, 0.3);
-    background-size: cover;    
-    background-position: center; 
-    background-repeat: no-repeat;
+/* Header container */
+.header {
+  height: 22vh;
+  width: 100%;
+  border-radius: 24px 24px 0 0;
+  background-image: url("/src/assets/bg5.jpg");
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
 }
-.logo img{
-    height: 70px;
-    width: 70px;
+
+/* Gradient overlay for better text readability */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(11, 145, 234, 0.2) 0%, 
+    rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
 }
-.top{
-    height: 9vh;
-    width: 96%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 10px;
-    padding-right: 5px;
+
+/* Top navigation section */
+.top {
+  height: 9vh;
+  width: 93%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 0 2rem; */
+  position: relative;
+  z-index: 2;
 }
-.links a{
-    color: aliceblue;
-    margin-left: 10px;
-    font-size: 21px;
-    text-decoration: none;
+
+/* Logo styling */
+.logo {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
 }
-.name{
-    margin-top: 10px;
+
+.logo:hover {
+  transform: scale(1.05);
 }
-.appname{
-    display: flex;
-    justify-content: center;
-    color: aliceblue;
-    font-size: 45px;
-    font-weight: 400;
+
+.logo img {
+  height: 70px;
+  width: 70px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transition: filter 0.3s ease;
 }
-.desc{
-    display: flex;
-    justify-content: center;
-    color: aliceblue;
-    font-size: 20px;
+
+.logo:hover img {
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5));
+}
+
+/* Navigation links */
+.links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.links a {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 0;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Underline animation effect */
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0b91ea, #00d4ff);
+  border-radius: 2px;
+  transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+.links a:hover {
+  color: #00d4ff;
+  transform: translateY(-2px);
+  text-shadow: 0 4px 8px rgba(0, 212, 255, 0.4);
+}
+
+.links a:active {
+  transform: translateY(0);
+}
+
+/* App name section */
+.name {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.appname {
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #ffffff 0%, #b3e0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+/* Description text */
+.desc {
+  display: flex;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    border-radius: 16px 16px 0 0;
+  }
+
+  .top {
+    padding: 0 1rem;
+  }
+
+  .logo img {
+    height: 55px;
+    width: 55px;
+  }
+
+  .links {
+    gap: 1rem;
+  }
+
+  .links a {
+    font-size: 0.95rem;
+  }
+
+  .appname {
+    font-size: 2.2rem;
+    padding: 0 1rem;
+  }
+
+  .desc {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 20vh;
+  }
+
+  .top {
+    height: 8vh;
+    padding: 0 0.8rem;
+  }
+
+  .logo img {
+    height: 45px;
+    width: 45px;
+  }
+
+  .links {
+    gap: 0.8rem;
+  }
+
+  .links a {
+    font-size: 0.85rem;
+  }
+
+  /* Hide some links on very small screens to prevent overflow */
+  .links a:nth-child(n+3) {
+    display: none;
+  }
+
+  .appname {
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+  }
+
+  .desc {
+    font-size: 0.9rem;
+  }
+}
+
+/* Special breakpoint for medium tablets */
+@media (max-width: 640px) and (min-width: 481px) {
+  .links a:nth-child(4) {
+    display: none;
+  }
 }

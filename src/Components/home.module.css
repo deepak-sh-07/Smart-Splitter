@@ -1,50 +1,218 @@
-body{
-    height: 93vh;
-    width: 98vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image:url("/src/assets/bg3.jpg");
-    background-size: cover;    
-    background-position: center; 
-    background-repeat: no-repeat;
+/* Main container styling */
+.main {
+  margin-top: 5px;
+  height: 88vh;
+  width: 50vw;
+  min-width: 600px;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+              0 0 0 1px rgba(255, 255, 255, 0.1);
+  background-image: url("/src/assets/bg4.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
 }
-.main{
-    background-image:url("/src/assets/bg4.jpg");
-    margin-top: 5px;
-    height: 88vh;
-    width: 50vw;
-    border-radius: 7px;
-    box-shadow: 8px -8px 15px 8px rgba(0, 0, 0, 0.3);
-    background-size: cover;    
-    background-position: center; 
-    background-repeat: no-repeat;
- }
-.container{
-    height: 58vh;
-    width: 100%;
-    margin: 4px;
-    display: flex;
-    justify-content: center;
-    gap: 33px;
-    padding-top: 10px;
+
+.main::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(11, 145, 234, 0.1) 0%, 
+    rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
 }
-.create ,.groups {
-    margin-top: 10px;
-    height: 45vh;
-    width: 45vh;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column; 
-    align-items:center;
-    background-color: #0b91ea;
-    cursor: pointer;
+
+/* Container for action cards */
+.container {
+  height: 58vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 60px 40px 40px;
+  position: relative;
+  z-index: 1;
 }
-.img img{
-    height: 100px;
-    width: 100px;
+
+/* Action cards base styling */
+.create,
+.groups {
+  height: 280px;
+  width: 280px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(135deg, #0b91ea 0%, #0a7dc7 100%);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(11, 145, 234, 0.3),
+              0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
-.info{
-    font-size: 30px;
+
+/* Hover glow effect */
+.create::before,
+.groups::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.2) 0%, 
+    transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.create:hover::before,
+.groups:hover::before {
+  opacity: 1;
+}
+
+/* Hover state */
+.create:hover,
+.groups:hover {
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 20px 50px rgba(11, 145, 234, 0.5),
+              0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+
+/* Active/Click state */
+.create:active,
+.groups:active {
+  transform: translateY(-8px) scale(1.02);
+  transition: all 0.1s ease;
+}
+
+/* Different color for groups card */
+.groups {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  box-shadow: 0 10px 30px rgba(106, 17, 203, 0.3),
+              0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.groups:hover {
+  box-shadow: 0 20px 50px rgba(106, 17, 203, 0.5),
+              0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+
+/* Image container */
+.img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.create:hover .img,
+.groups:hover .img {
+  transform: scale(1.1) rotate(5deg);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.img img {
+  height: 80px;
+  width: 80px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: filter 0.3s ease;
+}
+
+.create:hover .img img,
+.groups:hover .img img {
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+}
+
+/* Info text styling */
+.info {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.create:hover .info,
+.groups:hover .info {
+  transform: translateY(-4px);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .main {
+    width: 70vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    width: 90vw;
+    min-width: unset;
+    height: 92vh;
+    border-radius: 16px;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 20px;
+    height: auto;
+  }
+
+  .create,
+  .groups {
+    height: 220px;
+    width: 220px;
+  }
+
+  .img img {
+    height: 60px;
+    width: 60px;
+  }
+
+  .info {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .create,
+  .groups {
+    height: 180px;
+    width: 180px;
+  }
+
+  .img {
+    padding: 18px;
+  }
+
+  .img img {
+    height: 50px;
+    width: 50px;
+  }
+
+  .info {
+    font-size: 18px;
+  }
 }
